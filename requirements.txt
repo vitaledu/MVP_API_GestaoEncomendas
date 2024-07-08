@@ -1,0 +1,8 @@
+Flask
+SQLAlchemy
+pydantic
+Flask-RESTPlus
+marshmallow
+requests
+flask-cors
+flask-restx
