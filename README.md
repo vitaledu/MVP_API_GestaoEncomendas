@@ -140,7 +140,7 @@ Este projeto faz parte de um conjunto de três repositórios que se complementam
 	- [**Link de Acesso**](https://miro.com/app/board/uXjVKzv-qXg=/)
 
 ## Diagrama da Aplicação
-`images/diagrama.jpg`
+![Diagrama da Aplicação](./images/diagrama.jpg)
 
 ## Contato
 
