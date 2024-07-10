@@ -1,120 +1,140 @@
 
-# Encomendas API Frontend
+# Encomendas API
 
-Este é um frontend simples para consumir a `encomendas_api` e a `distancia_api`. Ele permite cadastrar encomendas, consultar detalhes de encomendas, e calcular a distância entre dois endereços.
-
+Esta é uma API para gerenciar encomendas. Ela permite adicionar, consultar, atualizar, deletar e marcar encomendas como entregues ou em trânsito, além de calcular a distância entre dois endereços.
 
 ## Requisitos
 
-  
-
-- Um servidor backend rodando a `encomendas_api` na porta `5000`.
-
+- Python 3.x
+- Flask
+- Flask-RESTx
+- SQLAlchemy
+- requests
 - Um servidor backend rodando a `distancia_api` na porta `5001`.
-
-  
 
 ## Estrutura do Projeto
 
-  
+- `app.py`: Arquivo principal contendo a definição da API.
+- `model/encomenda_model.py`: Definição do modelo Encomenda e configuração do banco de dados.
+- `schemas/encomenda_schema.py`: Esquema para serialização/deserialização do modelo Encomenda.
+- `logger.py`: Configuração de logging.
+- `requirements.txt`: Lista de dependências do projeto.
+- `README.md`: Documentação do projeto.
 
--  `index.html`: Arquivo principal HTML contendo a estrutura da página.
+##  Como Usar - Usando Docker
 
--  `style.css`: Arquivo opcional para estilos customizados.
+### Construção da Imagem
+ 
+ Clone o repositório:
+   ```sh
+   git clone https://github.com/vitaledu/MVP_API_GestaoEncomendas.git
+   cd MVP_API_GestaoEncomendas 
+   ```
+   
+Para construir a imagem Docker, execute o seguinte comando na raiz do projeto:
 
--  `script.js`: Arquivo JavaScript contendo a lógica para consumir as APIs.
+`docker build -t encomendas_api .` 
 
--  `nginx.conf`: Configuração personalizada do Nginx.
+### Executar o Contêiner
 
--  `Dockerfile`: Arquivo para construção da imagem Docker.
+Para executar o contêiner Docker e conectá-lo à mesma rede que o `distancia_api`, execute o seguinte comando:
 
--  `README.md`: Documentação do projeto.
+`docker run -d --name encomendas_api --network minha_rede -p 5000:5000 encomendas_api` 
 
-  
-
-## Como Usar
-
-  
+## Como Usar - Localmente
 
 1. Clone o repositório:
 
-```sh
+   ```sh
+   git clone https://github.com/vitaledu/MVP_API_GestaoEncomendas.git
+   cd MVP_API_GestaoEncomendas 
+   ```
+   
+2.  Crie e ative um ambiente virtual:
+    
+    ```sh
+	   python -m venv venv
+    source venv/bin/activate  # No Windows use `venv\Scripts\activate
+	  ``` 
+    
+3.  Instale as dependências:
+    
+    `pip install -r requirements.txt` 
+    
+4.  Certifique-se de que a `distancia_api` está rodando na porta `5001`.
+    
+5.  Execute a aplicação:
+    
+    `python app.py` 
+    
 
-git clone https://github.com/vitaledu/MVP_frontend_GestaoEncomendas.git
+## Endpoints
 
-cd MVP_frontend_GestaoEncomendas
+### Adicionar Encomenda
 
-```
-
-  
-
-2. Certifique-se de que as APIs `encomendas_api` e `distancia_api` estão rodando nas portas corretas.
-
-  
-
-3. Abra o `index.html` no seu navegador.
-
-  
-
-## Usando Docker
-
-  
-
-### Construção da Imagem
-
-  
-
-Para construir a imagem Docker, execute o seguinte comando na raiz do projeto:
-
-  
-
-```sh
-docker  build  -t  encomendas_frontend  .
-```
-Executar  o  Contêiner
-
-Para  executar  o  contêiner  Docker  e  conectá-lo  à  mesma  rede  que  o  encomendas_api  e  distancia_api,  execute  o  seguinte  comando:
-
-```sh
-docker  run  -d  --name  encomendas_frontend  --network  minha_rede  -p  8585:8585  encomendas_frontend
-```
-
-## Funcionalidades
-
-### Cadastrar Encomenda
-
-- Preencha o formulário com o código de rastreamento, descrição, endereço de origem, e endereço de destino.
-- Clique em "Cadastrar" para enviar a encomenda.
+-   **POST /encomendas**
+-   **Descrição:** Adiciona uma nova encomenda.
+-   **Request Body:**
+    
+    `{
+      "codigo_rastreamento": "string",
+      "descricao": "string",
+      "endereco_origem": "string",
+      "endereco_destino": "string",
+      "status": "string"
+    }` 
+    
 
 ### Consultar Encomenda
 
-- Insira o ID da encomenda no formulário de consulta.
-- Clique em "Consultar" para buscar os detalhes da encomenda.
+-   **GET /encomendas/{id}**
+-   **Descrição:** Retorna os detalhes de uma encomenda pelo seu ID.
+
+### Atualizar Encomenda
+
+-   **PUT /encomendas/{id}**
+-   **Descrição:** Atualiza os dados de uma encomenda pelo seu ID.
+-   **Request Body:** Igual ao de Adicionar Encomenda.
+
+### Deletar Encomenda
+
+-   **DELETE /encomendas/{id}**
+-   **Descrição:** Deleta uma encomenda pelo seu ID.
+
+### Marcar Encomenda como Entregue
+
+-   **PUT /encomendas/{id}/entregar**
+-   **Descrição:** Marca uma encomenda como entregue pelo seu ID.
+
+### Marcar Encomenda como Em Trânsito
+
+-   **PUT /encomendas/{id}/em_transito**
+-   **Descrição:** Marca uma encomenda como em trânsito pelo seu ID.
 
 ### Calcular Distância
 
-- Preencha os endereços de origem e destino no formulário de distância.
-- Clique em "Calcular" para obter a distância entre os endereços.
+-   **GET /distancia**
+-   **Descrição:** Calcula a distância entre dois endereços.
+-   **Parâmetros de Query:** `origem` e `destino`
 
 ## Tecnologias Usadas
 
-- HTML
-- CSS
-- JavaScript
-- jQuery
-- Bootstrap 4.5
-- Nginx
+-   Python
+-   Flask
+-   Flask-RESTx
+-   SQLAlchemy
+-   requests
 
 ## Repositórios Relacionados
 
 Este projeto faz parte de um conjunto de três repositórios que se complementam, mas cada um pode ser utilizado separadamente em outros projetos, caso necessário.
 
-- **API para Calcular Distância entre CEPs**
-  - GitHub: [MVP_API_CalcularDistanciaCEP](https://github.com/vitaledu/MVP_API_CalcularDistanciaCEP)
-- **API para Gestão de Encomendas**
-  - GitHub: [MVP_API_GestaoEncomendas](https://github.com/vitaledu/MVP_API_GestaoEncomendas)
-- **Frontend para Gestão de Encomendas (este repositório)**
-  - GitHub: [MVP_frontend_GestaoEncomendas](https://github.com/vitaledu/MVP_frontend_GestaoEncomendas)
+-   **API para Calcular Distância entre CEPs**
+    -   GitHub: [MVP_API_CalcularDistanciaCEP](https://github.com/vitaledu/MVP_API_CalcularDistanciaCEP)
+-   **API para Gestão de Encomendas (este repositório)**
+    -   GitHub: [MVP_API_GestaoEncomendas](https://github.com/vitaledu/MVP_API_GestaoEncomendas)
+-   **Frontend para Gestão de Encomendas**
+    -   GitHub: [MVP_frontend_GestaoEncomendas](https://github.com/vitaledu/MVP_frontend_GestaoEncomendas)
 
 ## Contato
 
