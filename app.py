@@ -178,7 +178,7 @@ def calcular_distancia_externa(origem, destino):
     #chamada à API externa
     #return 10.0   Exemplo de distância
     try:
-        response = requests.get(f'http://localhost:5001/calcular_distancia?origem={origem}&destino={destino}')
+        response = requests.get(f'http://distancia_api:5001/calcular_distancia?origem={origem}&destino={destino}')
         if response.status_code == 200:
             data = response.json()
             return data['distancia']

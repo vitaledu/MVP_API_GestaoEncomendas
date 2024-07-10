@@ -1,90 +1,121 @@
-# Encomendas API
 
-## Descrição
+# Encomendas API Frontend
 
-A Encomendas API é uma API RESTful construída com Flask e SQLAlchemy para gerenciar encomendas e calcular distâncias entre endereços. A API permite criar, atualizar, visualizar e deletar encomendas, além de calcular a distância entre dois endereços fornecidos.
+Este é um frontend simples para consumir a `encomendas_api` e a `distancia_api`. Ele permite cadastrar encomendas, consultar detalhes de encomendas, e calcular a distância entre dois endereços.
 
-## Funcionalidades
 
-- **Adicionar uma Encomenda**: Permite adicionar uma nova encomenda ao sistema.
-- **Visualizar uma Encomenda**: Permite visualizar os detalhes de uma encomenda específica usando o ID da encomenda.
-- **Atualizar uma Encomenda**: Permite atualizar os detalhes de uma encomenda existente.
-- **Deletar uma Encomenda**: Permite deletar uma encomenda existente do sistema.
-- **Calcular Distância**: Calcula a distância entre dois endereços fornecidos.
+## Requisitos
 
-## Instalação
+  
 
-1. Clone o repositório:
-    ```sh
-    git clone https://github.com/seu_usuario/encomendas_api.git
-    cd encomendas_api
-    ```
+- Um servidor backend rodando a `encomendas_api` na porta `5000`.
 
-2. Crie um ambiente virtual e instale as dependências:
-    ```sh
-    python -m venv venv
-    source venv/bin/activate  # No Windows: venv\Scripts\activate
-    pip install -r requirements.txt
-    ```
+- Um servidor backend rodando a `distancia_api` na porta `5001`.
 
-3. Execute a aplicação:
-    ```sh
-    flask run
-    ```
+  
 
 ## Estrutura do Projeto
 
-- `model/`: Contém o modelo de dados `Encomenda`.
-- `schemas/`: Contém os esquemas Marshmallow para serialização de dados.
-- `app.py`: Arquivo principal da aplicação Flask.
-- `logger.py`: Configuração do logger.
-- `requirements.txt`: Arquivo de dependências.
-- `README.md`: Documentação do projeto.
+  
 
-## Rotas da API
+-  `index.html`: Arquivo principal HTML contendo a estrutura da página.
 
-- `POST /encomendas`: Adiciona uma nova encomenda.
-- `GET /encomendas/<id>`: Obtém o status de uma encomenda específica.
-- `PUT /encomendas/<id>`: Atualiza informações da encomenda.
-- `DELETE /encomendas/<id>`: Remove uma encomenda.
-- `GET /distancia`: Calcula a distância entre dois endereços.
+-  `style.css`: Arquivo opcional para estilos customizados.
 
-## Swagger
+-  `script.js`: Arquivo JavaScript contendo a lógica para consumir as APIs.
 
-A documentação e testes da API podem ser acessados via Swagger em `http://localhost:5000/`.
+-  `nginx.conf`: Configuração personalizada do Nginx.
 
-## Docker
+-  `Dockerfile`: Arquivo para construção da imagem Docker.
+
+-  `README.md`: Documentação do projeto.
+
+  
+
+## Como Usar
+
+  
+
+1. Clone o repositório:
+
+```sh
+
+git clone https://github.com/vitaledu/MVP_frontend_GestaoEncomendas.git
+
+cd MVP_frontend_GestaoEncomendas
+
+```
+
+  
+
+2. Certifique-se de que as APIs `encomendas_api` e `distancia_api` estão rodando nas portas corretas.
+
+  
+
+3. Abra o `index.html` no seu navegador.
+
+  
+
+## Usando Docker
+
+  
 
 ### Construção da Imagem
 
+  
+
 Para construir a imagem Docker, execute o seguinte comando na raiz do projeto:
 
-```sh
-docker build -t encomendas_api .
-Executar o Contêiner
-Para executar o contêiner Docker, execute o seguinte comando:
+  
 
-sh
-Copy code
-docker run -d -p 5000:5000 encomendas_api
-Exemplo de Uso
-Adicionar uma Encomenda
-sh
-Copy code
-curl -X POST "http://localhost:5000/encomendas" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"codigo_rastreamento\": \"123456\", \"descricao\": \"Encomenda 1\", \"endereco_origem\": \"Origem\", \"endereco_destino\": \"Destino\", \"status\": \"Em trânsito\"}"
-Visualizar uma Encomenda
-sh
-Copy code
-curl -X GET "http://localhost:5000/encomendas/1" -H "accept: application/json"
-Atualizar uma Encomenda
-sh
-Copy code
-curl -X PUT "http://localhost:5000/encomendas/1" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"codigo_rastreamento\": \"654321\", \"descricao\": \"Encomenda Atualizada\", \"endereco_origem\": \"Origem Atualizada\", \"endereco_destino\": \"Destino Atualizado\", \"status\": \"Entregue\"}"
-Deletar uma Encomenda
-sh
-Copy code
-curl -X DELETE "http://localhost:5000/encomendas/1" -H "accept: application/json"
-Calcular Distância
-sh
-Copy code
-curl -X GET "http://localhost:5000/distancia?origem=Origem&destino=Destino" -H "accept: application/json"
+```sh
+docker  build  -t  encomendas_frontend  .
+```
+Executar  o  Contêiner
+
+Para  executar  o  contêiner  Docker  e  conectá-lo  à  mesma  rede  que  o  encomendas_api  e  distancia_api,  execute  o  seguinte  comando:
+
+```sh
+docker  run  -d  --name  encomendas_frontend  --network  minha_rede  -p  8585:8585  encomendas_frontend
+```
+
+## Funcionalidades
+
+### Cadastrar Encomenda
+
+- Preencha o formulário com o código de rastreamento, descrição, endereço de origem, e endereço de destino.
+- Clique em "Cadastrar" para enviar a encomenda.
+
+### Consultar Encomenda
+
+- Insira o ID da encomenda no formulário de consulta.
+- Clique em "Consultar" para buscar os detalhes da encomenda.
+
+### Calcular Distância
+
+- Preencha os endereços de origem e destino no formulário de distância.
+- Clique em "Calcular" para obter a distância entre os endereços.
+
+## Tecnologias Usadas
+
+- HTML
+- CSS
+- JavaScript
+- jQuery
+- Bootstrap 4.5
+- Nginx
+
+## Repositórios Relacionados
+
+Este projeto faz parte de um conjunto de três repositórios que se complementam, mas cada um pode ser utilizado separadamente em outros projetos, caso necessário.
+
+- **API para Calcular Distância entre CEPs**
+  - GitHub: [MVP_API_CalcularDistanciaCEP](https://github.com/vitaledu/MVP_API_CalcularDistanciaCEP)
+- **API para Gestão de Encomendas**
+  - GitHub: [MVP_API_GestaoEncomendas](https://github.com/vitaledu/MVP_API_GestaoEncomendas)
+- **Frontend para Gestão de Encomendas (este repositório)**
+  - GitHub: [MVP_frontend_GestaoEncomendas](https://github.com/vitaledu/MVP_frontend_GestaoEncomendas)
+
+## Contato
+
+Para mais informações, entre em contato com [eduardolimavital@gmail.com].
